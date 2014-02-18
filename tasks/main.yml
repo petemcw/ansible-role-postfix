@@ -1,0 +1,44 @@
+---
+# Defines tasks to install and configure Postfix
+
+- name: Include the OS specific varibles
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Create pre-seed values for Postfix configuration
+  template: src=tmp-postfix_selections.j2
+    dest=/tmp/postfix_selections
+    mode=0644 owner=root group=root
+  register: preseed_template
+  when: ansible_os_family == 'Debian'
+  tags:
+    - postfix
+
+- name: Pre-seed Postfix configuration
+  shell: executable=/bin/bash /usr/bin/debconf-set-selections /tmp/postfix_selections
+  when: preseed_template.changed == true
+  tags:
+    - postfix
+
+- name: Install packages for Debian derivatives
+  apt: pkg={{ item }} update_cache=yes state=latest
+  with_items: postfix_packages
+  when: ansible_os_family == 'Debian'
+  tags:
+    - postfix
+
+- name: Write Postfix configuration template
+  template: src=main-cf.j2
+    dest={{ postfix_config_dir }}/main.cf
+    mode=0644 owner=root group=root
+    backup=yes
+  notify:
+    - restart postfix
+  tags:
+    - postfix
+
+- name: Configure root user email forwarding
+  template: src=root-forward.j2
+    dest=/root/.forward
+    mode=0644 owner=root group=root
+  tags:
+    - postfix

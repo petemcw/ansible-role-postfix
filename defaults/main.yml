@@ -1,0 +1,3 @@
+---
+# The variables file used for Postfix playbooks.
+# If not overriden in inventory or as a parameter, this is the value that will be used

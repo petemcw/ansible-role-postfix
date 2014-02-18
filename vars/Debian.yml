@@ -1,0 +1,9 @@
+---
+# Defines variables for Debian/Ubuntu
+
+postfix_config_dir: '/etc/postfix'
+postfix_service: 'postfix'
+postfix_packages:
+  - 'heirloom-mailx'
+  - 'mailutils'
+  - 'postfix'
