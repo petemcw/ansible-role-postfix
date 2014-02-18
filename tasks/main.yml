@@ -11,12 +11,14 @@
   register: preseed_template
   when: ansible_os_family == 'Debian'
   tags:
+    - common
     - postfix
 
 - name: Pre-seed Postfix configuration
   shell: executable=/bin/bash /usr/bin/debconf-set-selections /tmp/postfix_selections
   when: preseed_template.changed == true
   tags:
+    - common
     - postfix
 
 - name: Install packages for Debian derivatives
@@ -24,6 +26,18 @@
   with_items: postfix_packages
   when: ansible_os_family == 'Debian'
   tags:
+    - common
+    - postfix
+
+- name: Write SMTP authentication template
+  template: src=sasl_passwd.j2
+    dest={{ postfix_config_dir }}/sasl_passwd
+    mode=0600 owner=root group=root
+  notify:
+    - postmap sasl
+  when: postfix_use_smtp == true
+  tags:
+    - common
     - postfix
 
 - name: Write Postfix configuration template
@@ -33,7 +47,9 @@
     backup=yes
   notify:
     - restart postfix
+    - send test email
   tags:
+    - common
     - postfix
 
 - name: Configure root user email forwarding
@@ -41,4 +57,5 @@
     dest=/root/.forward
     mode=0644 owner=root group=root
   tags:
+    - common
     - postfix
