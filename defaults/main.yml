@@ -8,3 +8,4 @@ postfix_relayhost: ''
 postfix_use_smtp: false
 postfix_relayhost_user: false
 postfix_relayhost_pass: false
+postfix_inet_interfaces: 'loopback-only'

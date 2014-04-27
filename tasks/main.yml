@@ -58,7 +58,7 @@
     backup=yes
   notify:
     - restart postfix
-    - send test email
+#    - send test email
   tags:
     - common
     - postfix

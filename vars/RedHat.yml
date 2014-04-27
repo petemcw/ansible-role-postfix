@@ -1,0 +1,6 @@
+---
+
+postfix_config_dir: '/etc/postfix'
+postfix_service: 'postfix'
+# Postfix included in default build, no deps
+postfix_packages: ''
