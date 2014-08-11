@@ -29,6 +29,9 @@ postfix_relayhost_user: false
 
 # The password for SMTP authentication
 postfix_relayhost_pass: false
+
+# The interfaces for Postfix to listen on
+postfix_inet_interfaces: 'loopback-only'
 ```
 
 ## Examples
