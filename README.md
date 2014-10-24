@@ -66,7 +66,7 @@ postfix_relayhost_pass: false
             postfix_use_smtp: true,
             postfix_relayhost: '[smtp.mandrill.com]',
             postfix_relayhost_user: 'mandrill_username',
-            postfix_relayhost_user: 'mandrill_apikey'
+            postfix_relayhost_pass: 'mandrill_apikey'
           }
     ```
 
