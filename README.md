@@ -32,6 +32,12 @@ postfix_relayhost_pass: false
 
 # The interfaces for Postfix to listen on
 postfix_inet_interfaces: 'loopback-only'
+
+# The protocols Postfix will use when it makes or accepts network connections, and also controls what DNS lookups Postfix will use when it makes network connections.
+postfix_inet_protocols: 'all'
+
+# The address type ("ipv6", "ipv4" or "any") that the Postfix SMTP client will try first, when a destination has IPv6 and IPv4 addresses with equal MX preference.
+postfix_smtp_address_preference: 'all'
 ```
 
 ## Examples
