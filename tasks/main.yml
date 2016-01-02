@@ -68,7 +68,7 @@
     src=root-forward.j2
     dest=/root/.forward
     mode=0644 owner=root group=root
-  when: postfix_notify_email is defined
+  when: postfix_notify_email
   tags:
     - common
     - postfix

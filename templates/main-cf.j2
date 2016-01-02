@@ -18,7 +18,7 @@ smtpd_use_tls=yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
-{% if postfix_use_smtp is defined and postfix_use_smtp == true %}
+{% if postfix_use_smtp and postfix_use_smtp == true %}
 # Enable SASL authentication
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
@@ -36,4 +36,4 @@ alias_database = hash:/etc/aliases
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = loopback-only
-relayhost = {% if postfix_relayhost is defined %}{{ postfix_relayhost }}{% else %}$mydomain{% endif %}
+relayhost = {% if postfix_relayhost %}{{ postfix_relayhost }}{% else %}$mydomain{% endif %}
