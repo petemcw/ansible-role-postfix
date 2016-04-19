@@ -8,3 +8,8 @@ postfix_relayhost: ''
 postfix_use_smtp: false
 postfix_relayhost_user: false
 postfix_relayhost_pass: false
+postfix_smtp_sasl_password_maps: ''
+postfix_smtp_sasl_auth_enable: 'yes'
+postfix_smtp_sasl_security_options: 'noanonymous'
+postfix_smtp_tls_security_level: 'encrypt'
+postfix_header_size_limit: '4096000'
