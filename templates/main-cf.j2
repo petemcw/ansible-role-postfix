@@ -20,10 +20,13 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
 {% if postfix_use_smtp is defined and postfix_use_smtp == true %}
 # Enable SASL authentication
-smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-smtp_sasl_security_options = noanonymous
+smtp_sasl_auth_enable = {% if postfix_smtp_sasl_auth_enable is defined %}{{ postfix_smtp_sasl_auth_enable }}{% else %}yes{% endif %}{{ "\n" }}
+smtp_sasl_password_maps = {% if postfix_smtp_sasl_password_maps is defined %}{{ postfix_smtp_sasl_password_maps }}{% else %}hash:/etc/postfix/sasl_passwd{% endif %}{{ "\n" }}
+smtp_sasl_security_options = {% if postfix_smtp_sasl_security_options is defined %}{{ postfix_smtp_sasl_security_options }}{% else %}noanonymous{% endif %}{{ "\n" }}
 smtp_use_tls = yes
+{% if postfix_smtp_tls_security_level is defined %}smtp_tls_security_level = {{ postfix_smtp_tls_security_level }}{{ "\n" }}{% endif %}
+{% if postfix_header_size_limit is defined %}header_size_limit = {{ postfix_header_size_limit }}{{ "\n" }}{% endif %}
+
 
 {% endif %}
 # General
