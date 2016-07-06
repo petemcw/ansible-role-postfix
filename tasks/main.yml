@@ -38,6 +38,15 @@
     - common
     - postfix
 
+- name: Install packages for RedHat derivatives
+  yum: >
+    name=postfix
+    state=latest
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - common
+    - postfix
+
 - name: Write SMTP authentication template
   template: >
     src=sasl_passwd.j2
