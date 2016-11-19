@@ -30,9 +30,8 @@
 - name: Install packages for Debian derivatives
   apt: >
     pkg={{ item }}
-    update_cache=yes
-    state=latest
-  with_items: postfix_packages
+    state=installed
+  with_items: "{{ postfix_packages }}"
   when: ansible_os_family == 'Debian'
   tags:
     - common
