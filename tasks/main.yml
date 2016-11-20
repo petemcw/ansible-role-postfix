@@ -7,6 +7,8 @@
     - common
     - postfix
 
+# @todo: Update to use new mktemp module from
+# https://github.com/ansible/ansible-modules-extras/pull/2991
 - name: Create pre-seed values for Postfix configuration
   template: >
     src=tmp-postfix_selections.j2
