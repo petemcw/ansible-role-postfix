@@ -17,6 +17,8 @@ smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
 smtpd_use_tls=yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtp_tls_wrappermode = {{ postfix_smtp_tls_wrappermode }}
+smtp_tls_security_level = {{ postfix_smtp_tls_security_level }}
 
 {% if postfix_use_smtp is defined and postfix_use_smtp == true %}
 # Enable SASL authentication
