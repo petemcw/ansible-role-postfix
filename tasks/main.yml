@@ -74,6 +74,21 @@
     - common
     - postfix
 
+- name: Write Postfix configuration for masquerading
+  template: >
+    src=recipient_canonical_map.j2
+    dest={{ postfix_config_dir }}/recipient_canonical_map
+    mode=0644 owner=root group=root
+    backup=yes
+  notify:
+    - restart postfix
+    - send test email
+  tags:
+    - common
+    - postfix
+  when:
+    - postfix_masquerade_address is defined
+
 - name: Start Postfix on server boot
   service: >
     name={{ postfix_service }}
