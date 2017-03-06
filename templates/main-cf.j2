@@ -36,7 +36,9 @@ alias_database = hash:/etc/aliases
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = {{ postfix_inet_interfaces }}
-relayhost = {% if postfix_relayhost is defined %}{{ postfix_relayhost }}{% else %}$mydomain{% endif %}
+{% if postfix_relayhost is defined %}
+relayhost = {{ postfix_relayhost }}
+{% endif %}
 {% if postfix_masquerade_address is defined %}
 recipient_canonical_classes = envelope_recipient
 recipient_canonical_maps = regexp:/etc/postfix/recipient_canonical_map
