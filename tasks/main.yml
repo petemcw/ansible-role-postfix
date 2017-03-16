@@ -7,6 +7,8 @@
     - common
     - postfix
 
+# @todo: Update to use new mktemp module from
+# https://github.com/ansible/ansible-modules-extras/pull/2991
 - name: Create pre-seed values for Postfix configuration
   template: >
     src=tmp-postfix_selections.j2
@@ -30,9 +32,8 @@
 - name: Install packages for Debian derivatives
   apt: >
     pkg={{ item }}
-    update_cache=yes
-    state=latest
-  with_items: postfix_packages
+    state=installed
+  with_items: "{{ postfix_packages }}"
   when: ansible_os_family == 'Debian'
   tags:
     - common
@@ -72,6 +73,21 @@
   tags:
     - common
     - postfix
+
+- name: Write Postfix configuration for masquerading
+  template: >
+    src=recipient_canonical_map.j2
+    dest={{ postfix_config_dir }}/recipient_canonical_map
+    mode=0644 owner=root group=root
+    backup=yes
+  notify:
+    - restart postfix
+    - send test email
+  tags:
+    - common
+    - postfix
+  when:
+    - postfix_masquerade_address is defined
 
 - name: Start Postfix on server boot
   service: >
