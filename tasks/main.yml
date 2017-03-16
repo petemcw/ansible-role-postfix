@@ -46,6 +46,7 @@
     mode=0600 owner=root group=root
   notify:
     - postmap sasl
+    - send test email
   when: postfix_use_smtp and postfix_relayhost_user and postfix_relayhost_pass
   tags:
     - common
