@@ -32,9 +32,19 @@
 - name: Install packages for Debian derivatives
   apt: >
     pkg={{ item }}
+    update_cache=yes
     state=installed
-  with_items: "{{ postfix_packages }}"
+  with_items: '{{ postfix_packages }}'
   when: ansible_os_family == 'Debian'
+  tags:
+    - common
+    - postfix
+
+- name: Install packages for RedHat derivatives
+  yum: >
+    name=postfix
+    state=latest
+  when: ansible_os_family == 'RedHat'
   tags:
     - common
     - postfix
