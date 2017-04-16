@@ -32,6 +32,21 @@ postfix_relayhost_user: false
 
 # The password for SMTP authentication
 postfix_relayhost_pass: false
+
+# Don't use mechanisms that permit anonymous authentication.
+postfix_smtp_sasl_security_options: 'noanonymous'
+
+# Enable client-side authentication
+# postfix_smtp_sasl_auth_enable: 'yes'
+
+# SMTP user:pass
+# postfix_smtp_sasl_password_maps: 'static:SMTP_Injection:APIKEY'
+
+# Ensures that the connection to the remote smtp server will be encrypted
+# postfix_smtp_tls_security_level: 'encrypt'
+
+# Header size limitation
+# postfix_header_size_limit: '4096000'
 ```
 
 ## Examples
@@ -67,6 +82,27 @@ postfix_relayhost_pass: false
             postfix_relayhost: '[smtp.mandrill.com]',
             postfix_relayhost_user: 'mandrill_username',
             postfix_relayhost_pass: 'mandrill_apikey'
+          }
+    ```
+3. Install Postfix and configure to use SMTP relay (Sparkpost)
+
+    ```yaml
+    ---
+    # This playbook installs Postfix email server
+
+    - name: Apply Postfix to mail nodes
+      hosts: all
+      roles:
+        - { role: postfix,
+            postfix_domain: 'example.com',
+            postfix_notify_email: 'mbr@example.com',
+            postfix_use_smtp: true,
+            postfix_relayhost: '[smtp.sparkpostmail.com]:587',
+            postfix_smtp_sasl_auth_enable: 'yes',
+            postfix_smtp_sasl_password_maps: 'static:SMTP_Injection:APIKEY',
+            postfix_smtp_sasl_security_options: 'noanonymous',
+            postfix_smtp_tls_security_level: 'encrypt',
+            postfix_header_size_limit: '4096000'
           }
     ```
 
