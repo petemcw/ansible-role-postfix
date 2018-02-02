@@ -30,7 +30,7 @@ smtp_use_tls = yes
 
 {% endif %}
 # General
-myhostname = {{ inventory_hostname }}
+myhostname = {{ ansible_hostname }}
 myorigin = $mydomain
 mydestination =
 mynetworks = {{ postfix_mynetworks }}
